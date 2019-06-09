@@ -1,6 +1,7 @@
 package com.dhanjyothi.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -37,6 +39,8 @@ public class Account {
 	private long maturityAmount;
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private User user;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Transaction> transaction;
 	public int getAccountId() {
 		return accountId;
 	}
@@ -91,5 +95,12 @@ public class Account {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	public List<Transaction> getTransaction() {
+		return transaction;
+	}
+	public void setTransaction(List<Transaction> transaction) {
+		this.transaction = transaction;
+	}
 
+	
 }
