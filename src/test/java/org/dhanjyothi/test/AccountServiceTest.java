@@ -197,8 +197,10 @@ public class AccountServiceTest {
 		transaction.setTransactionDate(djUtil.getCurrentDate());
 		transaction.setTransactionAmount(account.getMaturityAmount());
 
-		accountDao.openTermAccount(account);
+		//accountDao.openTermAccount(account);
 		accountService.openTermAccount(account, user);
+		
+		
 		List<Account> accountList = accountService.getTermAccountDetails(user.getUserId(), account.getAccountType());
 		System.out.println("Account list ::" + accountList);
 
@@ -235,13 +237,45 @@ public class AccountServiceTest {
 
 		Assert.assertEquals(1, accountList.size());
 
-		List<Transaction> transactionList = accountService.loadAllTransactions(account.getAccountId());
-		System.out.println("Transaction :" + transactionList);
+	}
+	
+	@Test
+	public void test_getTermAccountDetails() throws Exception{
+		System.out.println("GetTermAccountDetails method..");
 
-		for (Transaction trans : transactionList) {
+		user.setFirstName("laxman");
+		user.setLastName("rao");
+		user.setAddressLine1("chn");
+		user.setAddressLine2("sez");
+		user.setAadharId("123412341234");
+		user.setCity("chnn");
+		user.setDob("10/06/1991");
+		user.setEmailId("laxman@gmail.com");
+		user.setMobileNumber("9999999999");
+		user.setPan("ASDFG1234J");
+		user.setPin("600042");
+		user.setState("tamilnadu");
+		user.setUserName("laxman123");
+		user.setPassword("Asdfasdf@1");
+		// registerService.saveRegister(user);
 
-		}
-		// Assert.assertEquals(1, transactionList.size());
+		account.setAccountType("SAVINGS");
+		account.setAccountBalance(10000);
+		account.setDepositTenure(2);
+		account.setMaturityAmount(50000);
+		account.setAccountCreatedDate(djUtil.getCurrentDate());
+		account.setInterestRate(djUtil.getInterstDate(account.getDepositTenure(), account.getMaturityAmount()));
+		account.setUser(user);
+		
+		transaction.setTransactionType("Debit");
+		transaction.setTransactionDescription("Amount Debited for Term Account");
+		transaction.setTransactionDate(djUtil.getCurrentDate());
+		transaction.setTransactionAmount(account.getMaturityAmount());
+		
+		accountService.openTermAccount(account, user);
+		
+		accountService.getTermAccountDetails(user.getUserId(), account.getAccountType());
+		accountService.checkAccountExists(account.getAccountId());
 
 	}
 

@@ -39,8 +39,7 @@ public class Account {
 	private long maturityAmount;
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private User user;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Transaction> transaction;
+	
 	public int getAccountId() {
 		return accountId;
 	}
@@ -95,12 +94,8 @@ public class Account {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<Transaction> getTransaction() {
-		return transaction;
-	}
-	public void setTransaction(List<Transaction> transaction) {
-		this.transaction = transaction;
-	}
+	
+	
 
 	
 }
