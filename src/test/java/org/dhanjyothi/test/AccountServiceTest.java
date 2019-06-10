@@ -129,6 +129,7 @@ public class AccountServiceTest {
 		account.setAccountBalance(10000);
 		account.setAccountCreatedDate(djUtil.getCurrentDate());
 		account.setUser(user);
+		
 		accountDao.openSavingsAccount(account, false);
 
 		accountService.openSavingsAccount(user);
@@ -336,6 +337,56 @@ public class AccountServiceTest {
 		boolean flag = accountService.checkSavingsAccBalance(account.getAccountBalance());
 		Assert.assertFalse(flag);
 
+	}
+	
+	@Test
+	public void test_updateSavingsAccount() throws Exception{
+		System.out.println("UpdateSavingsAccount method..");
+
+		user.setFirstName("laxman");
+		user.setLastName("rao");
+		user.setAddressLine1("chn");
+		user.setAddressLine2("sez");
+		user.setAadharId("123412341234");
+		user.setCity("chnn");
+		user.setDob("10/06/1991");
+		user.setEmailId("laxman@gmail.com");
+		user.setMobileNumber("9999999999");
+		user.setPan("ASDFG1234J");
+		user.setPin("600042");
+		user.setState("tamilnadu");
+		user.setUserName("laxman123");
+		user.setPassword("Asdfasdf@1");
+		// registerService.saveRegister(user);
+
+		account.setAccountType("SAVINGS");
+		account.setAccountBalance(10000);
+		account.setDepositTenure(2);
+		account.setMaturityAmount(50000);
+		account.setAccountCreatedDate(djUtil.getCurrentDate());
+		account.setInterestRate(djUtil.getInterstDate(account.getDepositTenure(), account.getMaturityAmount()));
+		account.setUser(user);
+
+		//accountService.openTermAccount(account, user);
+		
+		/*Account acc=accountService.getAccountDetails(user.getUserId(), account.getAccountType());
+
+		acc.setAccountType("SAVINGS");
+		acc.setAccountBalance(20000);
+		acc.setDepositTenure(3);
+		acc.setMaturityAmount(150000);
+		acc.setAccountCreatedDate(djUtil.getCurrentDate());
+		acc.setInterestRate(djUtil.getInterstDate(account.getDepositTenure(), account.getMaturityAmount()));
+		acc.setUser(user);*/
+
+		accountService.updateSavingsAccount(account, user);
+		
+		List<Account> accountList=accountService.getTermAccountDetails(user.getUserId(), account.getAccountType());
+		System.out.println("+++"+accountList.size());
+		for(Account ac:accountList){
+			System.out.println("+++"+ac);
+		}
+		
 	}
 
 	@After
